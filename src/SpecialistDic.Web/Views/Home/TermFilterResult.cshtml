@@ -1,0 +1,47 @@
+﻿@using System.Runtime.InteropServices.ComTypes
+@model SpecialistDic.Model.TermResult
+@if (Model != null)
+{
+    var formatSearchLink = Url.Content("~/");
+    var searchFormat = "<a href="+ formatSearchLink+ "?q={0}>{1}</a>";
+
+    <div class="fachgebiet-info text-right">
+        <span title="Fachgebiet">@string.Join(" | ", Model.Subjects.SelectMany(sub => sub.ToStrings()))</span>
+    </div>
+    <table class="margin-bottom-0">
+        <tr>
+            <td width="10%">@Model.SourceTerm.Language → @Model.TargetTerm.Language</td>
+            <td class="term" width="45%"><b>@Model.SourceTerm.Text</b></td>
+            <td class="term" width="45%"><b>@Model.TargetTerm.Text</b></td>
+        </tr>
+        @foreach (var sourceDescriptionGroup in Model.SourceTerm.Descriptions)
+        {
+            if (sourceDescriptionGroup.Key.IndexOf("Quelle", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                continue;
+            }
+                
+            var sourceDescriptions = sourceDescriptionGroup.ToList();
+            var targetDescriptions = Model.TargetTerm.Descriptions[sourceDescriptionGroup.Key].ToList();
+
+            <tr>
+                <td width="10%">
+                    <label>@sourceDescriptionGroup.Key</label>
+                </td>
+                <td width="45%">
+                    @foreach (var description in sourceDescriptions.SelectMany(des => des.ToStrings(searchFormat)))
+                    {
+                        @Html.Raw(description)<br />
+                    }
+                </td>
+                <td width="45%">
+                    @foreach (var description in targetDescriptions.SelectMany(des => des.ToStrings(searchFormat)))
+                    {
+                        @Html.Raw(description)<br/>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+}

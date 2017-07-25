@@ -1,0 +1,87 @@
+﻿@import '\\\\uni-mainz.de\\dfs\\Groups\\70\\zdvdev\\web\\design\\dashboard\\1.3\\sassImports\\jgu_variables_reference.scss';
+
+td.term {
+    font-size: 1.33em;
+}
+
+
+
+#content-container {  
+    flex-shrink: 1;
+    @include breakpoint(small only) {
+        flex-wrap: wrap;
+    }
+}
+
+#content-container-start {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; 
+}
+
+#heading-start {
+    color: $jgupalette-storm-gray;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.fa-angle-up {
+    font-size: 2rem;
+    color: $jgupalette-storm-gray-accessible;
+    &:hover, &:active, &:focus {
+        color: $jgupalette-storm-gray;
+    }
+}
+
+#glossary-title {
+    padding-bottom: 7em;
+    color: $jgupalette-storm-gray;
+}
+
+#input-group-start {
+    padding-bottom: 30em;
+}
+
+.side-nav {
+    list-style-type: none;
+    margin: 1em 0 0 0;
+    padding: 0;
+}
+
+.fachgebiet-info {
+        color: $jgupalette-header-text;
+        margin: 0px 0px 20px 0;
+}
+
+.callout:hover {
+        border-color: $jgupalette-storm-gray-middle;
+        background-color: rgb(254,254,254);
+}
+
+a[href*="term"]:hover {
+    color: $jgupalette-monza;
+}
+
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+    .column.flex-container.align-center  {
+        flex-basis: 100%;
+    }
+    
+}
+
+.active > .callout {
+    border-left: solid 3px $jgupalette-monza;
+}
+
+
+
+
+
+
+
+
+
+
+

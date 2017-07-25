@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecialistDic.Web", "src\SpecialistDic.Web\SpecialistDic.Web.csproj", "{2EE862AB-8147-4787-A67E-8632D896E055}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0} = {3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}
+		{40AE8932-0EDC-4117-861E-EA834F40D225} = {40AE8932-0EDC-4117-861E-EA834F40D225}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9BFB9482-2E04-49A3-9412-9BA9E32218CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FB5FD210-4B66-41FC-B906-5DD0FEF4FE04}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Dev\NET\Web\SpecialistDictionary\main\docs\readme.md = ..\..\..\Dev\NET\Web\SpecialistDictionary\main\docs\readme.md
+		docs\solution.md = docs\solution.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecialistDic.DataAccess", "src\SpecialistDic.DataAccess\SpecialistDic.DataAccess.csproj", "{40AE8932-0EDC-4117-861E-EA834F40D225}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0} = {3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecialistDic.Model", "src\SpecialistDic.Model\SpecialistDic.Model.csproj", "{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{45BCD199-B46F-47EF-B150-F3EB209BE02E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.Test", "Model.Test\Model.Test.csproj", "{D9B7E6BD-B84D-44EA-9FAD-B272198651D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EE862AB-8147-4787-A67E-8632D896E055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE862AB-8147-4787-A67E-8632D896E055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE862AB-8147-4787-A67E-8632D896E055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE862AB-8147-4787-A67E-8632D896E055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40AE8932-0EDC-4117-861E-EA834F40D225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40AE8932-0EDC-4117-861E-EA834F40D225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40AE8932-0EDC-4117-861E-EA834F40D225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40AE8932-0EDC-4117-861E-EA834F40D225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9B7E6BD-B84D-44EA-9FAD-B272198651D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B7E6BD-B84D-44EA-9FAD-B272198651D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B7E6BD-B84D-44EA-9FAD-B272198651D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B7E6BD-B84D-44EA-9FAD-B272198651D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2EE862AB-8147-4787-A67E-8632D896E055} = {9BFB9482-2E04-49A3-9412-9BA9E32218CD}
+		{40AE8932-0EDC-4117-861E-EA834F40D225} = {9BFB9482-2E04-49A3-9412-9BA9E32218CD}
+		{3DE2771F-67E0-42DE-9014-66F3C3BD5BE0} = {9BFB9482-2E04-49A3-9412-9BA9E32218CD}
+		{D9B7E6BD-B84D-44EA-9FAD-B272198651D7} = {45BCD199-B46F-47EF-B150-F3EB209BE02E}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.zdv.uni-mainz.de/tfs/zdv
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = src\\SpecialistDic.Web\\SpecialistDic.Web.csproj
+		SccProjectTopLevelParentUniqueName1 = SpecialistDictionary.sln
+		SccProjectName1 = src/SpecialistDic.Web
+		SccLocalPath1 = src\\SpecialistDic.Web
+		SccProjectUniqueName2 = src\\SpecialistDic.DataAccess\\SpecialistDic.DataAccess.csproj
+		SccProjectTopLevelParentUniqueName2 = SpecialistDictionary.sln
+		SccProjectName2 = src/SpecialistDic.DataAccess
+		SccLocalPath2 = src\\SpecialistDic.DataAccess
+		SccProjectUniqueName3 = src\\SpecialistDic.Model\\SpecialistDic.Model.csproj
+		SccProjectTopLevelParentUniqueName3 = SpecialistDictionary.sln
+		SccProjectName3 = src/SpecialistDic.Model
+		SccLocalPath3 = src\\SpecialistDic.Model
+		SccProjectUniqueName4 = Model.Test\\Model.Test.csproj
+		SccProjectTopLevelParentUniqueName4 = SpecialistDictionary.sln
+		SccProjectName4 = Model.Test
+		SccLocalPath4 = Model.Test
+	EndGlobalSection
+EndGlobal

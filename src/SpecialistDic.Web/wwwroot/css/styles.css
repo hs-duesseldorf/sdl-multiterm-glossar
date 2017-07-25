@@ -1,0 +1,73 @@
+﻿/*$header-styles: (
+  small: (
+    'h1': ('font-size': 28),
+    'h2': ('font-size': 24),
+    'h3': ('font-size': 20),
+    'h4': ('font-size': 18),
+    'h5': ('font-size': 15),
+    'h6': ('font-size': 12),
+  ),
+  medium: (
+    'h1': ('font-size': 40),
+    'h2': ('font-size': 34),
+    'h3': ('font-size': 28),
+    'h4': ('font-size': 24),
+    'h5': ('font-size': 20),
+    'h6': ('font-size': 15),
+  ),
+);*/
+td.term {
+  font-size: 1.33em; }
+
+#content-container {
+  flex-shrink: 1; }
+  @media screen and (max-width: 39.9375em) {
+    #content-container {
+      flex-wrap: wrap; } }
+
+#content-container-start {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start; }
+
+#heading-start {
+  color: #6A6B6E;
+  margin-top: 3em;
+  margin-bottom: 3em; }
+
+.fa-angle-up {
+  font-size: 2rem;
+  color: #F1F1F1; }
+  .fa-angle-up:hover, .fa-angle-up:active, .fa-angle-up:focus {
+    color: #6A6B6E; }
+
+#glossary-title {
+  padding-bottom: 7em;
+  color: #6A6B6E; }
+
+#input-group-start {
+  padding-bottom: 30em; }
+
+.side-nav {
+  list-style-type: none;
+  margin: 1em 0 0 0;
+  padding: 0; }
+
+.fachgebiet-info {
+  color: #999;
+  margin: 0px 0px 20px 0; }
+
+.callout:hover {
+  border-color: #9FA0A4;
+  background-color: #fefefe; }
+
+a[href*="term"]:hover {
+  color: #C1002A; }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .column.flex-container.align-center {
+    flex-basis: 100%; } }
+
+.active > .callout {
+  border-left: solid 3px #C1002A; }
+

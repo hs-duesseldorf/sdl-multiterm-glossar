@@ -1,0 +1,64 @@
+﻿@using System.Threading.Tasks
+@using Microsoft.Extensions.Options
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>JGU Glossar</title>
+
+    <meta name="description" content="Identitätsmanagement der Johannes Gutenberg-Universität Mainz">
+    <meta name="author" content="">
+    <meta name="keyword" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.zdv.uni-mainz.de/web/designs/dashboard/1.3/dashboard.min.css" rel="stylesheet" />
+    <link href="https://cdn.zdv.uni-mainz.de/web/fontawesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+  
+    @RenderSection("Header", false)
+</head>
+
+<body class="grid-y grid-medium-grid-frame">
+<header class="cell shrink header show-for-medium">
+    <div data-sticky-container class="sticky-container">
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="@Url.Content("~/")">
+                <img class="logo" alt="JGU-Logo" src="https://cdn.zdv.uni-mainz.de/web/assets/logo_uni-mainz_condensed_grey.svg"/>
+            </a>
+        </div>
+    </div>
+    </div>
+</header>
+<header class="cell shrink header show-for-small-only grid-y grid-padding-y">
+    <div class="cell">
+        <a href="@Url.Content("~/")">
+            <img class="logo" alt="JGU-Logo" src="https://cdn.zdv.uni-mainz.de/web/assets/logo_uni-mainz_stacked_grey.svg"/>
+        </a>
+    </div>
+</header>
+
+<div class="cell medium-auto grid-y medium-cell-block-container">    
+    @RenderBody() 
+</div>
+
+<footer class="cell shrink footer grid-x grid-padding-x small-up-1 medium-up-3">
+    <div class="cell">Zentrum für Datenverarbeitung</div>
+    <div class="cell text-center">Johannes Gutenberg-Universität Mainz</div>
+    <div class="cell text-right">
+        <a href="https://www.uni-mainz.de/144.php">Datenschutz</a>
+        &nbsp;|&nbsp;
+        <a href="https://www.uni-mainz.de/102.php">Impressum</a>
+    </div>
+</footer>
+
+
+<script src="https://cdn.zdv.uni-mainz.de/web/requirejs/require_2.2.0.js" data-main="@Url.Content("~/js/Config.js")"></script>
+
+@RenderSection("Scripts", false)
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+﻿
+@*//===============================
+    // Author:      Emmanouil Sideris
+    //===============================
+    // Created:     Feb      2017
+    // Modified:    März     2017
+    //===============================*@
+
+@model List<string>
+
+@{
+    ViewData["Title"] = "TermFilterResult";
+}
+
+<br/>
+
+<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+@ViewData["Title"]
+
+<br />
+
+<p>
+    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    @*<a asp-action="Index">Neuen Begriff eingeben</a>*@
+    <a asp-area="" asp-controller="Home" asp-action="Index">Begriff</a>
+    |
+    <a asp-area="" asp-controller="Fachgebiet" asp-action="Index">Fachgebiet</a>
+    |
+    <a asp-area="" asp-controller="Begriffe" asp-action="Index">Begriffe(zusammen geklappt)</a>
+</p>
+
+@{
+    var trans1 = @Model[1].Split('^');
+    var trans2 = @Model[2].Split('^');
+    var trans3 = @Model[3].Split('^');
+    var trans4 = @Model[4].Split('^');
+    var trans5 = @Model[5].Split('^');
+    var trans6 = @Model[6].Split('^');
+    var trans7 = @Model[7].Split('^');
+    var trans8 = @Model[8].Split('^');
+}
+<table class="table">
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Translation:</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label for="example-text-input" class="col-10 col-form-label"><b>@trans1[0]</b></label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label for="example-text-input" class="col-10 col-form-label"><b>@trans1[1]</b></label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Grammatik:</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans2[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans2[1]</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Synonym:</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans3[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans3[0]</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Definition:</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans4[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans4[1]</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Quelle (Definition):</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans5[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans5[1]</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Kontext:</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans6[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans6[1]</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Quelle (Kontext):</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans7[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans7[1]</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label for="example-text-input" class="col-2 col-form-label">Kolokation:</label>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans8[0]</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-15">
+                <label class="form-control" type="text" value="Artisanal kale" id="example-text-input">@trans8[1]</label>
+            </div>
+        </td>
+    </tr>
+   
+</table>
