@@ -1,13 +1,21 @@
-﻿@model  SpecialistDic.DataAccess.TermQueryResult
+﻿@model SpecialistDic.DataAccess.TermQueryResult
 @if (Model != null)
 {
+
+    <div class="cell grid-x grid-padding-x grid-padding-y align-center">
+        @for (int i = 97; i < 123; i++)
+        {
+            <a class="button secondary zdv-border-light" asp-route-q="@((char)i)">@((char)i)</a>
+        }
+    </div>
+
     <div id="content-container" class="cell auto grid-x grid-padding-x">
         <div id="search-container" class="cell medium-cell-block-y medium-3 small-12 margin-top-1">
             <form class="form-inline">
                 <div class="input-group">
-                    <input type="text" class="input-group-field" autofocus name="q" placeholder="Bitte Begriff eingeben"/>
+                    <input type="text" class="input-group-field" autofocus name="q" placeholder="Bitte Begriff eingeben" />
                     <div class="input-group-button">
-                        <input type="submit" class="button" value="Suchen"/>
+                        <input type="submit" class="button" value="Suchen" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,7 +54,7 @@
                 {
                     var item = Model.Terms[i];
                     <div class="padding-top-1" id="term_@i">
-                        <div class="callout margin-bottom-0" >
+                        <div class="callout margin-bottom-0">
                             @Html.Partial("TermFilterResult", item)
                         </div>
                     </div>
@@ -59,5 +67,12 @@
                 </div>
             }
         </div>
+    </div>
+
+    <div class="cell grid-x grid-padding-x grid-padding-y align-center">
+        @for (int i = 97; i < 123; i++)
+        {
+            <a class="button secondary zdv-border-light" asp-route-q="@((char)i)">@((char)i)</a>
+        }
     </div>
 }
