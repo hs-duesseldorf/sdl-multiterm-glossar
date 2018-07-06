@@ -43,6 +43,13 @@
     @RenderBody() 
 </div>
 
+<div class="cell grid-x grid-padding-x grid-padding-y align-center zdv-border-top browse-by-letter">
+    @for (int i = 97; i < 123; i++)
+    {
+        <a class="button secondary zdv-border-right" asp-controller="Home" asp-action="Index" asp-route-q="@((char)i)">@((char)i)</a>
+    }
+</div>
+
 <footer class="cell shrink footer grid-x grid-padding-x small-up-1 medium-up-3">
     <div class="cell">Zentrum für Datenverarbeitung</div>
     <div class="cell text-center">Johannes Gutenberg-Universität Mainz</div>

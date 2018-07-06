@@ -1,22 +1,4 @@
-﻿/*$header-styles: (
-  small: (
-    'h1': ('font-size': 28),
-    'h2': ('font-size': 24),
-    'h3': ('font-size': 20),
-    'h4': ('font-size': 18),
-    'h5': ('font-size': 15),
-    'h6': ('font-size': 12),
-  ),
-  medium: (
-    'h1': ('font-size': 40),
-    'h2': ('font-size': 34),
-    'h3': ('font-size': 28),
-    'h4': ('font-size': 24),
-    'h5': ('font-size': 20),
-    'h6': ('font-size': 15),
-  ),
-);*/
-td.term {
+﻿td.term {
   font-size: 1.33em; }
 
 #content-container {
@@ -70,4 +52,9 @@ a[href*="term"]:hover {
 
 .active > .callout {
   border-left: solid 3px #C1002A; }
+
+.browse-by-letter > a.button {
+  margin-bottom: 0;
+  box-sizing: content-box;
+  width: 16px; }
 
