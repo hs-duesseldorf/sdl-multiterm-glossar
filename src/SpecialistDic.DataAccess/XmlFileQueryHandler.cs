@@ -14,9 +14,9 @@ namespace SpecialistDic.DataAccess
     public class TermQuery
     {
         public string SearchText { get; set; }
-        
+
         public string SearchPath { get; set; }
-        
+
         public int MaxResults { get; set; }
     }
 
@@ -25,19 +25,19 @@ namespace SpecialistDic.DataAccess
     {
         public Task<TermQueryResult> ExecuteQueryAsync(TermQuery query)
         {
-            if(string.IsNullOrWhiteSpace(query.SearchPath))
+            if (string.IsNullOrWhiteSpace(query.SearchPath))
                 throw new ArgumentNullException(nameof(query.SearchPath));
-            
+
             var isDirectory = IO.Directory.Exists(query.SearchPath);
-            if(!isDirectory && !IO.File.Exists(query.SearchPath))
+            if (!isDirectory && !IO.File.Exists(query.SearchPath))
                 throw new ArgumentException("SearchPath does not exist", nameof(query.SearchPath));
 
             return isDirectory
                 ? ExecuteDirectoryQuery(query)
-                : ExecuteFileQuery(query, query.SearchPath);        // populate query.MaxResults
+                : ExecuteFileQuery(query, query.SearchPath);
         }
 
-        
+
         private async Task<TermQueryResult> ExecuteDirectoryQuery(TermQuery query)
         {
             var xmlFiles = IO.Directory.EnumerateFiles(query.SearchPath, "*.xml", IO.SearchOption.AllDirectories);
@@ -45,7 +45,7 @@ namespace SpecialistDic.DataAccess
             var result = new TermQueryResult();
             foreach (var xmlFile in xmlFiles) //TODO: Try Catch!
             {
-                var fileResult = await ExecuteFileQuery(query, xmlFile);                // populate query.MaxResults
+                var fileResult = await ExecuteFileQuery(query, xmlFile);
                 result.ResultCount += fileResult.ResultCount;
                 result.Terms.AddRange(fileResult.Terms);
             }
@@ -54,14 +54,14 @@ namespace SpecialistDic.DataAccess
                 .OrderByQuery(query.SearchText)
                 .Take(query.MaxResults)
                 .ToList();
-            
+
             return result;
         }
 
-        
-        private async Task<TermQueryResult> ExecuteFileQuery(TermQuery query, string filePath)      // populate query.MaxResults
+
+        private async Task<TermQueryResult> ExecuteFileQuery(TermQuery query, string filePath)
         {
-            if(!IO.File.Exists(filePath))
+            if (!IO.File.Exists(filePath))
                 throw new IO.FileNotFoundException("File could not be found.", filePath);
 
             var multiTermXml = await Task.Run(() =>
@@ -82,7 +82,9 @@ namespace SpecialistDic.DataAccess
 
             return new TermQueryResult
             {
-                Terms = result.OrderByQuery(query.SearchText).Take(query.MaxResults).ToList(),      // hardkodiert 20, use MaxResults
+                Terms = result.OrderByQuery(query.SearchText)
+                              .Take(query.MaxResults)
+                              .ToList(),
                 ResultCount = result.Count
             };
         }
@@ -98,11 +100,10 @@ namespace SpecialistDic.DataAccess
         private List<TermResult> GetResultsPerXml(MultiTermRoot multiTermRoot, string searchText, string filePath)
         {
             var result = new List<TermResult>();
-            
+
             var termConceptGroups = GetTermConceptGroups(multiTermRoot, searchText, "DE");
 
-            // No synonyms in oneLetter search
-            if (searchText.Length > 1)          // change not include synonyms in one letter search
+            if (searchText.Length > 1)  // do not include synonyms in one letter search
             {
                 var synonymConeptGroups = GetSynonymTermConceptGroups(multiTermRoot, searchText, "DE");
 
@@ -139,28 +140,21 @@ namespace SpecialistDic.DataAccess
                 //TODO: ArrayOutOfBounds beachten!
                 var targetTerm = new Term(englishLanguageGroup.TermGroups[posInGermanTermGroup].Term, "EN", targetDescriptions);
                 // ===============================================================================================================
-
-                //var targetTermGroups = GetTargetTerms(conceptGroup, "EN");
-                //TODO: TargetLanguageGroup Laden, TermGroups nach List umwandeln, Position mit IndexOf ermitteln
-
-                //foreach (var targetTermGroup in targetTermGroups)
-                //{
-                //    var targetDescriptions = GetDescriptions(targetTermGroup.Descriptions);
-                //    var targetTerm = new Term(targetTermGroup.Term, "EN", targetDescriptions);
+                
 
                 result.Add(new TermResult
                 {
                     Subjects = subjects,
-                        
-                        SourceTerm = sourceTerm,
-                        TargetTerm = targetTerm
-                    });
+
+                    SourceTerm = sourceTerm,
+                    TargetTerm = targetTerm
+                });
                 //}
             }
 
             return result;
         }
-        
+
 
         /// <summary>
         /// Fetches all concept groups with a matching term.
@@ -172,28 +166,20 @@ namespace SpecialistDic.DataAccess
         private Dictionary<TermGroup, ConceptGroup> GetTermConceptGroups(MultiTermRoot multiTermRoot, string searchText, string language)
         {
             var result = new Dictionary<TermGroup, ConceptGroup>();
-            var sourceTerms = new List<TermGroup>();
-            
+            bool isWordSearch = searchText.Length > 1;
+
             foreach (var concept in multiTermRoot.ConceptGroups)
             {
-                if (searchText.Length > 1)
-                {
-                    sourceTerms = concept.Translations
-                        .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
-                        .SelectMany(t => t.TermGroups)
-                        .Where(tg => tg.Term.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                        .ToList();
-                }
-                else     // change to take only startswith in the one letter search
-                {
-                    sourceTerms = concept.Translations
-                        .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
-                        .SelectMany(t => t.TermGroups)
-                        .Where(tg => tg.Term.ToLower().StartsWith(searchText.ToLower())) //, StringComparison.OrdinalIgnoreCase) >= 0)
-                        .ToList();
-                }
+                var sourceTermsQuery = concept.Translations
+                    .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
+                    .SelectMany(t => t.TermGroups);
+                
+                if (isWordSearch)
+                    sourceTermsQuery = sourceTermsQuery.Where(tg => tg.Term.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0);
+                else 
+                    sourceTermsQuery = sourceTermsQuery.Where(tg => tg.Term.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) == 0);
 
-                foreach (var sourceTerm in sourceTerms)
+                foreach (var sourceTerm in sourceTermsQuery.ToList())
                     result.Add(sourceTerm, concept);
             }
 
@@ -216,8 +202,8 @@ namespace SpecialistDic.DataAccess
                 var sourceTerms = concept.Translations
                     .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
                     .SelectMany(t => t.TermGroups)
-                    .Where(tg => tg.Descriptions?.Any(des => 
-                        des.Content.Type.Equals("Synonyme") 
+                    .Where(tg => tg.Descriptions?.Any(des =>
+                        des.Content.Type.Equals("Synonyme")
                         && des.Content.GetFullPlainText().IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
                         ?? false)
                     .ToList();
@@ -246,8 +232,8 @@ namespace SpecialistDic.DataAccess
 
             return result;
         }
-        
-        
+
+
         private List<Description> GetDescriptions(DescriptionGroup[] descriptionGroups)
         {
             var result = new List<Description>(descriptionGroups?.Length ?? 0);
@@ -255,7 +241,7 @@ namespace SpecialistDic.DataAccess
                 return result;
 
             foreach (var descriptionGroup in descriptionGroups)
-            {                
+            {
                 result.Add(new Description()
                 {
                     FormatText = descriptionGroup.Content.GetFormatText(),
@@ -278,7 +264,7 @@ namespace SpecialistDic.DataAccess
             if (result.Any())
                 return result;
 
-            return new []{new Description()
+            return new[]{new Description()
             {
                 FormatText = fileName
             } };
