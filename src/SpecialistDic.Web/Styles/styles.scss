@@ -75,13 +75,10 @@ a[href*="term"]:hover {
     border-left: solid 3px $jgupalette-monza;
 }
 
-
-
-
-
-
-
-
-
-
-
+.browse-by-letter {
+    > a.button {
+        margin-bottom: 0;
+        box-sizing: content-box;
+        width: 16px;
+    }
+}

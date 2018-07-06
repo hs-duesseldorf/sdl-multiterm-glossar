@@ -51,8 +51,9 @@ namespace SpecialistDic.Web.Controllers
             {
                 SearchPath = _mySearchPath,
                 SearchText = q,
-                MaxResults = 20
+                MaxResults = q.Length != 1 ? 20 : short.MaxValue
             };
+
             var result = await _queryHandler.ExecuteQueryAsync(query);
             
             return View("Result", result);
