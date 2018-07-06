@@ -1,5 +1,12 @@
 ﻿
 <div class="cell grid-x grid-padding-x grid-padding-y align-center">
+    @for (int i = 97; i < 123; i++)
+    {
+        <a class="button secondary zdv-border-light" asp-route-q="@((char)i)">@((char)i)</a>
+    }
+</div>
+
+<div class="cell grid-x grid-padding-x grid-padding-y align-center zdv-border">
     <div class="cell grid-y align-center large-4 medium-6 small-12">
         <div id="glossary-title" class="cell medium-auto grid-x grid-padding-x align-center margin-top-3"><h1>JGU Glossar</h1></div>
 

@@ -34,7 +34,7 @@ namespace SpecialistDic.DataAccess
 
             return isDirectory
                 ? ExecuteDirectoryQuery(query)
-                : ExecuteFileQuery(query.SearchText, query.SearchPath);
+                : ExecuteFileQuery(query, query.SearchPath);        // populate query.MaxResults
         }
 
         
@@ -45,7 +45,7 @@ namespace SpecialistDic.DataAccess
             var result = new TermQueryResult();
             foreach (var xmlFile in xmlFiles) //TODO: Try Catch!
             {
-                var fileResult = await ExecuteFileQuery(query.SearchText, xmlFile);
+                var fileResult = await ExecuteFileQuery(query, xmlFile);                // populate query.MaxResults
                 result.ResultCount += fileResult.ResultCount;
                 result.Terms.AddRange(fileResult.Terms);
             }
@@ -59,7 +59,7 @@ namespace SpecialistDic.DataAccess
         }
 
         
-        private async Task<TermQueryResult> ExecuteFileQuery(string searchText, string filePath)
+        private async Task<TermQueryResult> ExecuteFileQuery(TermQuery query, string filePath)      // populate query.MaxResults
         {
             if(!IO.File.Exists(filePath))
                 throw new IO.FileNotFoundException("File could not be found.", filePath);
@@ -78,11 +78,11 @@ namespace SpecialistDic.DataAccess
             if (multiTermXml == null)
                 return new TermQueryResult();
 
-            var result = GetResultsPerXml(multiTermXml, searchText, filePath);
-            
+            var result = GetResultsPerXml(multiTermXml, query.SearchText, filePath);
+
             return new TermQueryResult
             {
-                Terms = result.OrderByQuery(searchText).Take(20).ToList(),
+                Terms = result.OrderByQuery(query.SearchText).Take(query.MaxResults).ToList(),      // hardkodiert 20, use MaxResults
                 ResultCount = result.Count
             };
         }
@@ -100,12 +100,19 @@ namespace SpecialistDic.DataAccess
             var result = new List<TermResult>();
             
             var termConceptGroups = GetTermConceptGroups(multiTermRoot, searchText, "DE");
-            var synonymConeptGroups = GetSynonymTermConceptGroups(multiTermRoot, searchText, "DE");
-            foreach (var synonymConeptGroup in synonymConeptGroups)
+
+            // No synonyms in oneLetter search
+            if (searchText.Length > 1)          // change not include synonyms in one letter search
             {
-                if(!termConceptGroups.ContainsKey(synonymConeptGroup.Key))
-                    termConceptGroups.Add(synonymConeptGroup.Key,synonymConeptGroup.Value);
+                var synonymConeptGroups = GetSynonymTermConceptGroups(multiTermRoot, searchText, "DE");
+
+                foreach (var synonymConeptGroup in synonymConeptGroups)
+                {
+                    if (!termConceptGroups.ContainsKey(synonymConeptGroup.Key))
+                        termConceptGroups.Add(synonymConeptGroup.Key, synonymConeptGroup.Value);
+                }
             }
+
 
             foreach (var sourceTermGroup in termConceptGroups.Keys)
             {
@@ -165,14 +172,26 @@ namespace SpecialistDic.DataAccess
         private Dictionary<TermGroup, ConceptGroup> GetTermConceptGroups(MultiTermRoot multiTermRoot, string searchText, string language)
         {
             var result = new Dictionary<TermGroup, ConceptGroup>();
-
+            var sourceTerms = new List<TermGroup>();
+            
             foreach (var concept in multiTermRoot.ConceptGroups)
             {
-                var sourceTerms = concept.Translations
-                    .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
-                    .SelectMany(t => t.TermGroups)
-                    .Where(tg => tg.Term.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                    .ToList();
+                if (searchText.Length > 1)
+                {
+                    sourceTerms = concept.Translations
+                        .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
+                        .SelectMany(t => t.TermGroups)
+                        .Where(tg => tg.Term.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                        .ToList();
+                }
+                else     // change to take only startswith in the one letter search
+                {
+                    sourceTerms = concept.Translations
+                        .Where(t => t.Language.TwoLetterLanguageCode.Equals(language, StringComparison.OrdinalIgnoreCase))
+                        .SelectMany(t => t.TermGroups)
+                        .Where(tg => tg.Term.ToLower().StartsWith(searchText.ToLower())) //, StringComparison.OrdinalIgnoreCase) >= 0)
+                        .ToList();
+                }
 
                 foreach (var sourceTerm in sourceTerms)
                     result.Add(sourceTerm, concept);
